@@ -23,13 +23,6 @@
 
 class avahi inherits avahi::params {
 
-#    $avahi_pkgs = [ 'avahi', 'avahi-tools', 'nss-mdns' ]
-#     $avahi_main    = 'avahi'
-#         $avahi_daemon  = 'avahi-daemon'
-#             $avahi_tools   = 'avahi_tools'
-#                 $avahi_mdns    = 'nss-mdns'
-# $avahi_dbus = 'dbus' or 'messagebus'
-#
    package { $avahi_main:
      ensure  => installed,
    }
