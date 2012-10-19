@@ -1,6 +1,13 @@
-avahi
+# avahi
+With this avahi module you'll be able to hit other nodes on your local network using zeroconf. This includes connecting to Macs and other Linux systems.
 
-This is the avahi module.
+You'll often be able to see other systems as something.local.
+
+    avahi-browse -a
+
+is the normal way to see what's available via zeroconf.
+
+See also: [Zeroconf](http://en.wikipedia.org/wiki/Zero_configuration_networking)
 
 License
 -------
@@ -14,4 +21,4 @@ stahnma@fedoraproject.org
 
 Support
 -------
-none
+[File issues](https://github.com/stahnma/puppet-module-avahi/issues)

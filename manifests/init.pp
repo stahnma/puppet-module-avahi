@@ -1,12 +1,11 @@
 # == Class: avahi
 #
-#  This module sets up avahi on EL based systems.
+#  This module sets up avahi on EL/Debian based systems.
 #
+#  Tested on EL6 and Wheezy
 #
 #  Requirements:
 #    cprice404-inifile >= 0.0.3
-#
-# === Parameters
 #
 # === Examples
 #
@@ -26,10 +25,12 @@ class avahi inherits avahi::params {
    package { $avahi_main:
      ensure  => installed,
    }
+
    package { $avahi_tools:
      ensure  => installed,
      require => Package[$avahi_main]
    }
+
    package { $avahi_mdns:
      ensure  => installed,
      require => Package[$avahi_main]
