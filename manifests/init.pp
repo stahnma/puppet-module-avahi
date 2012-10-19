@@ -21,25 +21,38 @@
 # Copyright 2012 Michael Stahnke
 
 
-class avahi {
+class avahi inherits avahi::params {
 
-    $avahi_pkgs = [ 'avahi', 'avahi-tools', 'nss-mdns' ]
-
-   package { $avahi_pkgs:
+#    $avahi_pkgs = [ 'avahi', 'avahi-tools', 'nss-mdns' ]
+#     $avahi_main    = 'avahi'
+#         $avahi_daemon  = 'avahi-daemon'
+#             $avahi_tools   = 'avahi_tools'
+#                 $avahi_mdns    = 'nss-mdns'
+# $avahi_dbus = 'dbus' or 'messagebus'
+#
+   package { $avahi_main:
      ensure  => installed,
    }
+   package { $avahi_tools:
+     ensure  => installed,
+     require => Package[$avahi_main]
+   }
+   package { $avahi_mdns:
+     ensure  => installed,
+     require => Package[$avahi_main]
+   }
 
-   service { 'avahi-daemon':
+   service { $avahi_daemon:
      ensure    => running,
      enable    => true,
      hasstatus => true,
-     require   => Service['messagebus'],
+     require   => Service[$avahi_dbus],
    }
 
-   service { 'messagebus':
+   service { $avahi_dbus:
      ensure  => running,
      enable  => true,
-     require => Package[$avahi_pkgs],
+     require => Package[$avahi_mdns],
    }
 
   ini_setting { "avahi-${::hostname}":
@@ -49,7 +62,8 @@ class avahi {
     setting => 'host-name',
     key_val_separator => '=',
     value   => $::hostname,
-    notify  => Service['avahi-daemon'],
+    notify  => Service[$avahi_daemon],
+    require => Package[$avahi_mdns],
   }
 
 }
