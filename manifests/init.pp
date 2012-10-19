@@ -40,10 +40,11 @@ class avahi inherits avahi::params {
      ensure    => running,
      enable    => true,
      hasstatus => true,
-     require   => Service[$avahi_dbus],
+     require   => Service['avahi_dbus'],
    }
 
-   service { $avahi_dbus:
+   service { 'avahi_dbus':
+     name    => $avahi_dbus,
      ensure  => running,
      enable  => true,
      require => Package[$avahi_mdns],
